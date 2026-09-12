@@ -22,7 +22,7 @@ jobs:
           filename=$(date +"%m_%d_%y").dump
           heroku pg:backups:capture -a opencreorg
           heroku pg:backups:download -a opencreorg --output=./backups/"${filename}"
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: opencreorg_db_backup
           path: ./backups/*.dump
