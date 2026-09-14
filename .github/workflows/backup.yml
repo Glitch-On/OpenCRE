@@ -14,6 +14,8 @@ jobs:
     name: Download Heroku Backup Replace Oldest Local Backup
     runs-on: ubuntu-latest
     steps:
+      - name: Install Heroku CLI
+        run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
       - name: Download Backup
         env: 
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
