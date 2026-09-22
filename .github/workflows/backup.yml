@@ -18,8 +18,12 @@ jobs:
         run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
       - name: Download Backup
         env: 
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY || secrets.HEROKU_AUTH_TOKEN || secrets.HEROKU_OAUTH_TOKEN }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
+          HEROKU_OAUTH_TOKEN: ${{ secrets.HEROKU_OAUTH_TOKEN }}
         run: |
+          HEROKU_API_KEY="${HEROKU_API_KEY:-${HEROKU_AUTH_TOKEN:-${HEROKU_OAUTH_TOKEN:-}}}"
+          export HEROKU_API_KEY
           if [ -z "${HEROKU_API_KEY}" ]; then
             echo "Missing Heroku API key. Set HEROKU_API_KEY (or HEROKU_AUTH_TOKEN/HEROKU_OAUTH_TOKEN) in GitHub Actions secrets." >&2
             exit 1
